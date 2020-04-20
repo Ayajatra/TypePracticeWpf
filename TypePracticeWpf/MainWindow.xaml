@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TypePracticeWpf"
         mc:Ignorable="d"
-        FontSize="24"
+        FontSize="21"
+        Background="#222222"
         Title="Type Practice" Height="500" Width="800" WindowStartupLocation="CenterScreen"
         Loaded="Window_Loaded">
 
@@ -25,29 +26,32 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
+
         <TextBlock Grid.Row="1" Grid.Column="1" Text="Type Practice" FontFamily="Segoe UI Light" FontSize="28"
-                   HorizontalAlignment="Center" Margin="0 0 0 10" />
+                       HorizontalAlignment="Center" Margin="0 0 0 10" />
 
         <Button Grid.Row="2" Grid.Column="1" x:Name="buttonGenerate"
-                HorizontalAlignment="Center" Padding="8 4" Margin="0 0 0 10"
-                Click="buttonGenerate_Click">
+                    HorizontalAlignment="Center" Padding="20 8" Margin="0 0 0 10"
+                    Click="buttonGenerate_Click">
             Generate Phrase
         </Button>
 
         <TextBlock Grid.Row="3" Grid.Column="1" x:Name="textBlockWpm"  Text="0 WPM"
-                   HorizontalAlignment="Center" Margin="0 0 0 10" />
+                       HorizontalAlignment="Center" Margin="0 0 0 10" />
 
         <ProgressBar Grid.Row="4" Grid.Column="1" x:Name="progressBar" Height="30"
-                     Margin="0 0 0 10" />
+                         Margin="0 0 0 10" Background="LightGray"/>
 
-        <Border Grid.Row="5" Grid.Column="1" Padding="4" Margin="0 0 0 10" BorderThickness="0.5" BorderBrush="Black">
+        <Border Grid.Row="5" Grid.Column="1" Padding="8" Margin="0 0 0 10" BorderThickness="1"
+                BorderBrush="#858585">
             <WrapPanel x:Name="wrapPanelPhrase" />
         </Border>
 
-        <TextBox Grid.Row="6" Grid.Column="1" Padding="4" x:Name="textBoxInput" FontWeight="SemiBold"
+        <TextBox Grid.Row="6" Grid.Column="1" Padding="4" x:Name="textBoxInput"
                  Margin="0 0 0 10" TextChanged="textBoxInput_TextChanged" />
 
         <TextBlock Grid.Row="7" Grid.Column="1" HorizontalAlignment="Center"
-                   Text="Note: WPM only start being calculated after first keystroke" />
+                       Text="Note: WPM only start being calculated after first keystroke" />
     </Grid>
+
 </Window>

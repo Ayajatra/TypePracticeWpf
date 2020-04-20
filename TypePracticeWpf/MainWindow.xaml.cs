@@ -88,7 +88,6 @@ namespace TypePracticeWpf
                     foreach (var character in word)
                     {
                         var run = new Run(character.ToString());
-                        run.FontWeight = FontWeights.SemiBold;
                         textBlock.Inlines.Add(run);
                     }
                     
@@ -109,9 +108,9 @@ namespace TypePracticeWpf
             for (int i = 0; i < currentWord.Length; i++)
             {
                 currentTextBlock.Inlines.ElementAt(i).Foreground = i >= textBoxInput.Text.Length
-                    ? Brushes.Black
+                    ? Brushes.White
                     : textBoxInput.Text[i] == currentWord[i]
-                        ? Brushes.Blue
+                        ? Brushes.MediumPurple
                         : Brushes.Red;
             }
 
@@ -147,6 +146,21 @@ namespace TypePracticeWpf
             currentWord = currentTextBlock.Inlines
                 .Aggregate(new StringBuilder(), (acc, current) => acc.Append(((Run)current).Text))
                 .ToString();
+        }
+
+        private void ButtonClose_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
+        }
+
+        private void ButtonMaximze_Click(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Maximized;
+        }
+
+        private void ButtonMinimize_Click(object sender, RoutedEventArgs e)
+        {
+            WindowState = WindowState.Minimized;
         }
     }
 }
