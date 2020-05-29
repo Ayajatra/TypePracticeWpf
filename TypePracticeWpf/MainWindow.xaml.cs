@@ -2,16 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.IO;
 
 namespace TypePracticeWpf
@@ -21,26 +16,13 @@ namespace TypePracticeWpf
     /// </summary>
     public partial class MainWindow : Window
     {
-        const int maxSentence = 4;
-        const int minSentence = 1;
-        const int maxWord = 15;
-        const int minWord = 5;
-        Punctuation[] punctuations = new[]
-        {
-            new Punctuation(".", true),
-            new Punctuation("?", true),
-            new Punctuation(",", false),
-            new Punctuation(";", false),
-            new Punctuation(":", false)
-        };
-
         Random random = new Random();
         List<char[]> generatedText = new List<char[]>();
         int currentPosition;
         TextBlock currentTextBlock;
         string currentWord;
         DateTime startTime;
-        string[] words;
+        string[] paragraphs;
 
         public MainWindow()
         {
@@ -49,7 +31,7 @@ namespace TypePracticeWpf
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            words = File.ReadAllLines("./words.txt");
+            paragraphs = File.ReadAllLines("./paragraphs.txt");
             buttonGenerate_Click(this, e);
         }
 
@@ -63,38 +45,21 @@ namespace TypePracticeWpf
             startTime = default;
             currentPosition = 0;
 
-            var sentenceLength = random.Next(minSentence, maxSentence + 1);
-            bool capitalizeNextWord = true;
-            for (int i = 0; i < sentenceLength; i++)
+            var paragraph = paragraphs[random.Next(paragraphs.Length)];
+            var words = Regex.Split(paragraph, @"(?<=\s)", RegexOptions.Compiled);
+            foreach (var word in words)
             {
-                var punctuation = punctuations[random.Next(punctuations.Length)];
-                var wordLength = random.Next(minWord, maxWord + 1);
-                for (int j = 0; j < wordLength; j++)
+                var characters = word.ToCharArray();
+                var textBlock = new TextBlock();
+
+                foreach (var character in characters)
                 {
-                    var word = (words[random.Next(words.Length)] + (i + 1 == sentenceLength && j + 1 == wordLength
-                        ? punctuation.Value
-                        : j + 1 == wordLength
-                            ? $"{punctuation.Value} "
-                            : " ")).ToCharArray();
-
-                    if (capitalizeNextWord)
-                    {
-                        capitalizeNextWord = false;
-                        word.Capitalize();
-                    }
-
-                    generatedText.Add(word);
-                    var textBlock = new TextBlock();
-                    foreach (var character in word)
-                    {
-                        var run = new Run(character.ToString());
-                        textBlock.Inlines.Add(run);
-                    }
-                    
-                    wrapPanelPhrase.Children.Add(textBlock);
+                    var run = new Run(character.ToString());
+                    textBlock.Inlines.Add(run);
                 }
-
-                capitalizeNextWord = punctuation.CapitalizeNextWord;
+                    
+                generatedText.Add(characters);
+                wrapPanelPhrase.Children.Add(textBlock);
             }
 
             MoveTextBlock();
