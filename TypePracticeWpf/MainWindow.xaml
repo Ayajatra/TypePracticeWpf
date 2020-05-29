@@ -5,9 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TypePracticeWpf"
         mc:Ignorable="d"
-        FontSize="21"
+        FontSize="24"
         Background="#222222"
-        Title="Type Practice" Height="500" Width="800" WindowStartupLocation="CenterScreen"
+        Title="Type Practice" Height="600" Width="900" WindowStartupLocation="CenterScreen"
         Loaded="Window_Loaded">
 
     <Grid Margin="10">
